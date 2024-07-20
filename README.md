@@ -6,5 +6,7 @@ the index.js file has a function to input data from the field into an array. a s
 
 the style .css file adds style to the html content and assists with the mark as purchased button to indicate the text as purchased.
 
+to view the result, click here:https://subtle-choux-f8b0d2.netlify.app/
+
 
 
