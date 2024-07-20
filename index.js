@@ -1,53 +1,57 @@
- //add items to list container
- function addToList(){
-    document.getElementById('dropdown');
-    let value=txtbox.value.trim();
-    //if value empty nothing is submitted
-    if (value == ''){
-        return;
-    }
-    //create dropdown list
-    let option = document.createElement("option");
-    option.text=value;
-    option.value=value;
-    dropdown.add(option);
+let arr = [];
 
-//event for clicking the addToList button
-const input = document.getElementById('addToList');
-input.addEventListener('click', function addToList() {
-alert('item added to cart');
-});
-   
-}
+        function addToList() {
+            // Get value from input text
+            let inputText = document.getElementById('txtbox').value.trim();
 
-//remove items from list one at a time
-function ClearList() {
-let x = document.getElementById("dropdown");
-x.remove(x.selectedIndex);
+            // Check if input is not empty
+            if (inputText !== '') {
+                // Append input to array with initial purchased state false
+                arr.push({ text: inputText, purchased: false });
 
-//event for clicking the ClearList button
-const input2 = document.getElementById('ClearList');
-input2.addEventListener('click', function ClearList() {
-  alert('Item removed');
-});
-}
-//add bought items to ul
-function MarkAsPurchased(){
-    
-    let droplist = document.getElementById("dropdown").value;
-    let listNode = document.getElementById("purchased");
-    let liNode = document.createElement("li");
-    let dropNode = document.createTextNode(droplist);
+                // Display array data
+                displayList();
 
-liNode.appendChild(dropNode);
-listNode.appendChild(liNode);
+                // Clear the input field for the next item
+                document.getElementById('txtbox').value = '';
+            }
+        }
 
-//event for clicking the MarkAsPurchased button
-const input3 = document.getElementById('MarkAsPurchased');
-input3.addEventListener('click', function MarkAsPurchased() {
-alert('Item bought');
-});
-}
+        function displayList() {
+            let listContainer = document.getElementById("mytext");
+            listContainer.innerHTML = '';
 
+            // Loop through the array and create list items
+            for (let i = 0; i < arr.length; i++) {
+                let item = arr[i];
+                let li = document.createElement('li');
+                li.textContent = item.text;
 
+                // Add class 'purchased' if item is marked as purchased
+                if (item.purchased) {
+                    li.classList.add('purchased');
+                }
 
+                // Add click event listener to toggle purchased state
+                li.addEventListener('click', function() {
+                    item.purchased = !item.purchased; // Toggle purchased state
+                    displayList(); // Update the displayed list
+                });
+
+                listContainer.appendChild(li);
+            }
+        }
+
+        function clearList() {
+            arr = [];
+            displayList(); // Update the displayed list
+        }
+
+        function markAllAsPurchased() {
+            // Toggle purchased state of all items in the array
+            arr.forEach(function(item) {
+                item.purchased = true; // Mark as purchased
+            });
+
+            displayList(); // Update the displayed list
+        }
